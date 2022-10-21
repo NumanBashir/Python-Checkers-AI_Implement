@@ -56,7 +56,7 @@ def minimax_alpha_beta(position, depth, max_player, game, alpha, beta):
                 bestMove = move
             if beta <= alpha:
                 break
-            
+
         return minEval, bestMove
 
 
