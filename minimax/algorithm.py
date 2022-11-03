@@ -1,10 +1,13 @@
 from copy import deepcopy
+import time
+
 import pygame
 
 RED = (255, 0, 0)
 WHITE = (255, 255, 255)
 
 def minimax(position, depth, max_player, game):
+    start = time.time()
     if depth == 0 or position.winner() != None:
         return position.evaluate(), position
     
@@ -16,7 +19,9 @@ def minimax(position, depth, max_player, game):
             maxEval = max(maxEval, evaluation)
             if maxEval == evaluation:
                 bestMove = move
-        
+
+        end = time.time()
+        print('Evaluation time: {}s'.format(round(end - start, 7)))
         return maxEval, bestMove
     else:
         minEval = float('inf')
@@ -26,10 +31,13 @@ def minimax(position, depth, max_player, game):
             minEval = min(minEval, evaluation)
             if minEval == evaluation:
                 bestMove = move
-        
+
+        end = time.time()
+        print('Evaluation time: {}s'.format(round(end - start, 7)))
         return minEval, bestMove
 
 def minimax_alpha_beta(position, depth, max_player, game, alpha, beta):
+    start = time.time()
     if depth == 0 or position.winner() != None:
         return position.evaluate(), position
     
@@ -44,6 +52,8 @@ def minimax_alpha_beta(position, depth, max_player, game, alpha, beta):
             if beta <= alpha:
                 break
 
+        end = time.time()
+        print('Evaluation time: {}s'.format(round(end - start, 7)))
         return maxEval, bestMove
 
     else:
@@ -57,6 +67,8 @@ def minimax_alpha_beta(position, depth, max_player, game, alpha, beta):
             if beta <= alpha:
                 break
 
+        end = time.time()
+        print('Evaluation time: {}s'.format(round(end - start, 7)))
         return minEval, bestMove
 
 
