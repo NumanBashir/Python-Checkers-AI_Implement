@@ -22,12 +22,12 @@ def main():
     run = True
     clock = pygame.time.Clock()
     game = Game(WIN)
+    #tree_depth = math.log(len(game), 2)
 
     while run:
         clock.tick(FPS)
 
         if game.turn == WHITE:
-            #Test
             #value, new_board = minimax(game.get_board(), 4, WHITE, game) # The higher the depth the longer it will take to calculate
             value, new_board = minimax_alpha_beta(game.get_board(), 3, WHITE, game, MIN_VALUE, MAX_VALUE)
             game.ai_move(new_board)

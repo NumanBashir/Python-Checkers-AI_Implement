@@ -1,5 +1,6 @@
 from copy import deepcopy
 import time
+from logging import root
 
 import pygame
 import math
@@ -7,7 +8,11 @@ import math
 RED = (255, 0, 0)
 WHITE = (255, 255, 255)
 
+counter = 0
+
 def minimax(position, depth, max_player, game):
+    global counter
+
     start = time.time()
     if depth == 0 or position.winner() != None:
         return position.evaluate(), position
@@ -36,6 +41,8 @@ def minimax(position, depth, max_player, game):
         end = time.time()
         print('Evaluation time: {}s'.format(round(end - start, 7)))
         return minEval, bestMove
+
+
 
 def minimax_alpha_beta(position, depth, max_player, game, alpha, beta):
     start = time.time()
@@ -82,6 +89,7 @@ def simulate_move(piece, move, board, game, skip):
 
 def get_all_moves(board, color, game):
     moves = []
+    leaves = []
 
     for piece in board.get_all_pieces(color):
         valid_moves = board.get_valid_moves(piece) #Get all the valid moves for the given piece
@@ -91,8 +99,18 @@ def get_all_moves(board, color, game):
             temp_piece = temp_board.get_piece(piece.row, piece.col)
             new_board = simulate_move(temp_piece, move, temp_board, game, skip)
             moves.append(new_board)
-    
+
+            #leaves.append(new_board)
+
+    number_of_leaves = len(leaves)
+    number_of_moves = len(moves)
+
+    print(f"Number of valid_moves: {number_of_leaves}")
+    print(f"Number of moves: {number_of_moves}")
+    #print(f"Array of leaves: {leaves}")
+
     return moves
+
 
 def draw_moves(game, board, piece):
     valid_moves = board.get_valid_moves(piece)
@@ -101,3 +119,5 @@ def draw_moves(game, board, piece):
     game.draw_valid_moves(valid_moves.keys())
     pygame.display.update()
     pygame.time.delay(250)
+
+
