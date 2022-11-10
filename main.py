@@ -2,7 +2,7 @@
 import pygame
 from checkers.constants import WIDTH, HEIGHT, SQUARE_SIZE, RED, WHITE
 from checkers.game import Game
-from minimax.algorithm import minimax, minimax_alpha_beta
+from minimax.algorithm import minimax, minimax_alpha_beta, get_moves
 import math
 
 FPS = 60
@@ -22,6 +22,7 @@ def get_row_col_from_mouse(pos):
 
 def main():
     global counter
+
     run = True
     clock = pygame.time.Clock()
     game = Game(WIN)
@@ -30,11 +31,16 @@ def main():
         clock.tick(FPS)
 
         if game.turn == WHITE:
+            number_of_moves = 0
             #value, new_board = minimax(game.get_board(), 4, WHITE, game) # The higher the depth the longer it will take to calculate
-            value, new_board = minimax_alpha_beta(game.get_board(), 3, WHITE, game, MIN_VALUE, MAX_VALUE, counter)
-            print(counter)
-            counter = 0
+            value, new_board = minimax_alpha_beta(game.get_board(), 3, WHITE, game, MIN_VALUE, MAX_VALUE)
+
+            number_of_moves += get_moves(game.get_board(), WHITE, game)
+            #print(number_of_moves)
+            #number_of_moves -= number_of_moves
+            #print(number_of_moves)
             game.ai_move(new_board)
+
 
         if game.winner() != None:
             print(game.winner())

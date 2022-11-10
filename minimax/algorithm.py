@@ -43,9 +43,9 @@ def minimax(position, depth, is_max, game):
 
 
 
-def minimax_alpha_beta(position, depth, is_max, game, alpha, beta, counter):
+def minimax_alpha_beta(position, depth, is_max, game, alpha, beta):
+    global counter
 
-    #start = time.time()
     if depth == 0 or position.winner() != None:
         return position.evaluate(), position
     
@@ -54,15 +54,14 @@ def minimax_alpha_beta(position, depth, is_max, game, alpha, beta, counter):
         bestMove = None
         for move in get_all_moves(position, WHITE, game):
             counter += 1
-            evaluation = minimax_alpha_beta(move, depth-1, False, game, alpha, beta, counter)[0]
+            evaluation = minimax_alpha_beta(move, depth-1, False, game, alpha, beta)[0]
             maxEval = max(maxEval, evaluation)
             if maxEval == evaluation:
                 bestMove = move
             if beta <= alpha:
                 break
 
-        #end = time.time()
-        #print('Evaluation time: {}s'.format(round(end - start, 7)))
+        print(counter)
         return maxEval, bestMove
 
     else:
@@ -70,17 +69,23 @@ def minimax_alpha_beta(position, depth, is_max, game, alpha, beta, counter):
         bestMove = None
         for move in get_all_moves(position, RED, game):
             counter += 1
-            evaluation = minimax_alpha_beta(move, depth-1, True, game, alpha, beta, counter)[0]
+            evaluation = minimax_alpha_beta(move, depth-1, True, game, alpha, beta)[0]
             minEval = min(minEval, evaluation)
             if minEval == evaluation:
                 bestMove = move
             if beta <= alpha:
                 break
 
-        #end = time.time()
-        #print('Evaluation time: {}s'.format(round(end - start, 7)))
-        #print(counter)
-        return minEval, bestMove, counter
+        print(counter)
+        return minEval, bestMove
+
+def get_moves(position, color, game):
+    global counter
+    counter = 0
+    for move in get_all_moves(position, color, game):
+        counter += 1
+
+    return counter
 
 
 def simulate_move(piece, move, board, game, skip):
