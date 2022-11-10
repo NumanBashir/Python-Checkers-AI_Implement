@@ -10,14 +10,13 @@ WHITE = (255, 255, 255)
 
 counter = 0
 
-def minimax(position, depth, max_player, game):
-    global counter
+def minimax(position, depth, is_max, game):
 
     start = time.time()
     if depth == 0 or position.winner() != None:
         return position.evaluate(), position
     
-    if max_player:
+    if is_max:
         maxEval = -math.inf
         bestMove = None
         for move in get_all_moves(position, WHITE, game):
@@ -44,40 +43,44 @@ def minimax(position, depth, max_player, game):
 
 
 
-def minimax_alpha_beta(position, depth, max_player, game, alpha, beta):
-    start = time.time()
+def minimax_alpha_beta(position, depth, is_max, game, alpha, beta, counter):
+
+    #start = time.time()
     if depth == 0 or position.winner() != None:
         return position.evaluate(), position
     
-    if max_player:
+    if is_max:
         maxEval = -math.inf
         bestMove = None
         for move in get_all_moves(position, WHITE, game):
-            evaluation = minimax_alpha_beta(move, depth-1, False, game, alpha, beta)[0]
+            counter += 1
+            evaluation = minimax_alpha_beta(move, depth-1, False, game, alpha, beta, counter)[0]
             maxEval = max(maxEval, evaluation)
             if maxEval == evaluation:
                 bestMove = move
             if beta <= alpha:
                 break
 
-        end = time.time()
-        print('Evaluation time: {}s'.format(round(end - start, 7)))
+        #end = time.time()
+        #print('Evaluation time: {}s'.format(round(end - start, 7)))
         return maxEval, bestMove
 
     else:
         minEval = math.inf
         bestMove = None
         for move in get_all_moves(position, RED, game):
-            evaluation = minimax_alpha_beta(move, depth-1, True, game, alpha, beta)[0]
+            counter += 1
+            evaluation = minimax_alpha_beta(move, depth-1, True, game, alpha, beta, counter)[0]
             minEval = min(minEval, evaluation)
             if minEval == evaluation:
                 bestMove = move
             if beta <= alpha:
                 break
 
-        end = time.time()
-        print('Evaluation time: {}s'.format(round(end - start, 7)))
-        return minEval, bestMove
+        #end = time.time()
+        #print('Evaluation time: {}s'.format(round(end - start, 7)))
+        #print(counter)
+        return minEval, bestMove, counter
 
 
 def simulate_move(piece, move, board, game, skip):
@@ -99,15 +102,6 @@ def get_all_moves(board, color, game):
             temp_piece = temp_board.get_piece(piece.row, piece.col)
             new_board = simulate_move(temp_piece, move, temp_board, game, skip)
             moves.append(new_board)
-
-            #leaves.append(new_board)
-
-    number_of_leaves = len(leaves)
-    number_of_moves = len(moves)
-
-    print(f"Number of valid_moves: {number_of_leaves}")
-    print(f"Number of moves: {number_of_moves}")
-    #print(f"Array of leaves: {leaves}")
 
     return moves
 

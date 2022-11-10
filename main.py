@@ -9,6 +9,8 @@ FPS = 60
 MAX_VALUE = math.inf
 MIN_VALUE = -math.inf
 
+counter = 0
+
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Checkers')
 
@@ -19,17 +21,19 @@ def get_row_col_from_mouse(pos):
     return row, col
 
 def main():
+    global counter
     run = True
     clock = pygame.time.Clock()
     game = Game(WIN)
-    #tree_depth = math.log(len(game), 2)
 
     while run:
         clock.tick(FPS)
 
         if game.turn == WHITE:
             #value, new_board = minimax(game.get_board(), 4, WHITE, game) # The higher the depth the longer it will take to calculate
-            value, new_board = minimax_alpha_beta(game.get_board(), 3, WHITE, game, MIN_VALUE, MAX_VALUE)
+            value, new_board = minimax_alpha_beta(game.get_board(), 3, WHITE, game, MIN_VALUE, MAX_VALUE, counter)
+            print(counter)
+            counter = 0
             game.ai_move(new_board)
 
         if game.winner() != None:
