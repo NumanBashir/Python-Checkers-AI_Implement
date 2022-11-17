@@ -11,8 +11,8 @@ WHITE = (255, 255, 255)
 counter = 0
 
 def minimax(position, depth, is_max, game):
+    global counter
 
-    start = time.time()
     if depth == 0 or position.winner() != None:
         return position.evaluate(), position
     
@@ -20,25 +20,25 @@ def minimax(position, depth, is_max, game):
         maxEval = -math.inf
         bestMove = None
         for move in get_all_moves(position, WHITE, game):
+            counter += 1
             evaluation = minimax(move, depth-1, False, game)[0]
             maxEval = max(maxEval, evaluation)
             if maxEval == evaluation:
                 bestMove = move
 
-        end = time.time()
-        print('Evaluation time: {}s'.format(round(end - start, 7)))
+        print(counter)
         return maxEval, bestMove
     else:
         minEval = math.inf
         bestMove = None
         for move in get_all_moves(position, RED, game):
+            counter += 1
             evaluation = minimax(move, depth-1, True, game)[0]
             minEval = min(minEval, evaluation)
             if minEval == evaluation:
                 bestMove = move
 
-        end = time.time()
-        print('Evaluation time: {}s'.format(round(end - start, 7)))
+        print(counter)
         return minEval, bestMove
 
 
