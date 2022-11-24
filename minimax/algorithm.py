@@ -11,7 +11,6 @@ WHITE = (255, 255, 255)
 counter = 0
 
 def minimax(position, depth, is_max, game):
-    start = time.time()
     global counter
 
     if depth == 0 or position.winner() != None:
@@ -27,8 +26,6 @@ def minimax(position, depth, is_max, game):
             if maxEval == evaluation:
                 bestMove = move
 
-        end = time.time()
-        print('Evaluation time: {}s'.format(round(end - start, 7)))
         print(counter)
         return maxEval, bestMove
     else:
@@ -41,15 +38,12 @@ def minimax(position, depth, is_max, game):
             if minEval == evaluation:
                 bestMove = move
 
-        end = time.time()
-        print('Evaluation time: {}s'.format(round(end - start, 7)))
         print(counter)
         return minEval, bestMove
 
 
 
 def minimax_alpha_beta(position, depth, is_max, game, alpha, beta):
-    start = time.time()
     global counter
 
     if depth == 0 or position.winner() != None:
@@ -64,13 +58,10 @@ def minimax_alpha_beta(position, depth, is_max, game, alpha, beta):
             maxEval = max(maxEval, evaluation)
             if maxEval == evaluation:
                 bestMove = move
-            alpha = max(alpha, maxEval)
-            if beta <= alpha:
+            if alpha <= beta:
                 counter -= 1
                 break
 
-        end = time.time()
-        print('Evaluation time: {}s'.format(round(end - start, 7)))
         print(counter)
         return maxEval, bestMove
 
@@ -83,13 +74,10 @@ def minimax_alpha_beta(position, depth, is_max, game, alpha, beta):
             minEval = min(minEval, evaluation)
             if minEval == evaluation:
                 bestMove = move
-            beta = min(beta, minEval)
-            if beta <= alpha:
+            if alpha <= beta:
                 counter -= 1
                 break
 
-        end = time.time()
-        print('Evaluation time: {}s'.format(round(end - start, 7)))
         print(counter)
         return minEval, bestMove
 
