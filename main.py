@@ -5,8 +5,8 @@ from checkers.game import Game
 from minimax.algorithm import minimax, minimax_alpha_beta
 
 FPS = 60
-MAX_VALUE = float('inf')
-MIN_VALUE = float('-inf')
+beta = float('inf')
+alpha = float('-inf')
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Checkers')
@@ -26,8 +26,8 @@ def main():
         clock.tick(FPS)
 
         if game.turn == WHITE:
-            value, new_board = minimax(game.get_board(), 5, WHITE, game) # The higher the depth the longer it will take to calculate
-            #value, new_board = minimax_alpha_beta(game.get_board(), 5, WHITE, game, MIN_VALUE, MAX_VALUE)
+            #value, new_board = minimax(game.get_board(), 5, WHITE, game) # The higher the depth the longer it will take to calculate
+            value, new_board = minimax_alpha_beta(game.get_board(), 5, WHITE, game, alpha, beta)
             game.ai_move(new_board)
 
         if game.winner() != None:

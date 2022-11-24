@@ -41,6 +41,7 @@ def minimax_alpha_beta(position, depth, max_player, game, alpha, beta):
             maxEval = max(maxEval, evaluation)
             if maxEval == evaluation:
                 bestMove = move
+            alpha = max(alpha, evaluation)
             if beta <= alpha:
                 break
 
@@ -54,6 +55,7 @@ def minimax_alpha_beta(position, depth, max_player, game, alpha, beta):
             minEval = min(minEval, evaluation)
             if minEval == evaluation:
                 bestMove = move
+            beta = min(beta, evaluation)
             if beta <= alpha:
                 break
 
