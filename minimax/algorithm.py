@@ -22,7 +22,7 @@ def minimax(position, depth, is_max, game):
         for move in get_all_moves(position, WHITE, game):
             counter += 1
             evaluation = minimax(move, depth-1, False, game)[0]
-            maxEval = max(maxEval, evaluation)
+            maxEval = min(maxEval, evaluation)
             if maxEval == evaluation:
                 bestMove = move
 
@@ -34,7 +34,7 @@ def minimax(position, depth, is_max, game):
         for move in get_all_moves(position, RED, game):
             counter += 1
             evaluation = minimax(move, depth-1, True, game)[0]
-            minEval = min(minEval, evaluation)
+            minEval = max(minEval, evaluation)
             if minEval == evaluation:
                 bestMove = move
 
@@ -50,7 +50,7 @@ def minimax_alpha_beta(position, depth, is_max, game, alpha, beta):
         return position.evaluate(), position
     
     if is_max:
-        maxEval = -math.inf
+        maxEval = float("-inf")
         bestMove = None
         for move in get_all_moves(position, WHITE, game):
             counter += 1
