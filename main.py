@@ -32,8 +32,8 @@ def main():
 
         if game.turn == WHITE:
             number_of_moves = 0
-            #value, new_board = minimax(game.get_board(), 4, WHITE, game) # The higher the depth the longer it will take to calculate
-            value, new_board = minimax_alpha_beta(game.get_board(), 4, WHITE, game, MIN_VALUE, MAX_VALUE)
+            value, new_board = minimax(game.get_board(), 3, WHITE, game) # The higher the depth the longer it will take to calculate
+            #value, new_board = minimax_alpha_beta(game.get_board(), 5, WHITE, game, MIN_VALUE, MAX_VALUE)
 
             number_of_moves += get_moves(game.get_board(), WHITE, game)
             #print(number_of_moves)
