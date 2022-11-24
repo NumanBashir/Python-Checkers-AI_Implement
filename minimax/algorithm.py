@@ -50,7 +50,7 @@ def minimax_alpha_beta(position, depth, is_max, game, alpha, beta):
         return position.evaluate(), position
     
     if is_max:
-        maxEval = float("-inf")
+        maxEval = -math.inf
         bestMove = None
         for move in get_all_moves(position, WHITE, game):
             counter += 1
