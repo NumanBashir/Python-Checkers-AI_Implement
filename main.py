@@ -26,8 +26,8 @@ def main():
         clock.tick(FPS)
 
         if game.turn == WHITE:
-            #value, new_board = minimax(game.get_board(), 5, WHITE, game) # The higher the depth the longer it will take to calculate
-            value, new_board = minimax_alpha_beta(game.get_board(), 5, WHITE, game, alpha, beta)
+            value, new_board = minimax(game.get_board(), 4, WHITE, game) # The higher the depth the longer it will take to calculate
+            #value, new_board = minimax_alpha_beta(game.get_board(), 5, WHITE, game, alpha, beta)
             game.ai_move(new_board)
 
         if game.winner() != None:
