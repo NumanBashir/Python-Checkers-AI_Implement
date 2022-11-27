@@ -9,6 +9,7 @@ RED = (255, 0, 0)
 WHITE = (255, 255, 255)
 
 counter = 0
+leaf = 0
 
 
 def minimax(position, depth, is_max, game):
@@ -23,9 +24,9 @@ def minimax(position, depth, is_max, game):
         bestMove = None
         for move in get_all_moves(position, WHITE, game):
             counter += 1
-            evaluation = minimax(move, depth-1, False, game)[0]
-            maxEval = max(maxEval, evaluation)
-            if maxEval == evaluation:
+            eval = minimax(move, depth-1, False, game)[0]
+            maxEval = max(maxEval, eval)
+            if maxEval == eval:
                 bestMove = move
 
         end = time.time()
@@ -37,9 +38,9 @@ def minimax(position, depth, is_max, game):
         bestMove = None
         for move in get_all_moves(position, RED, game):
             counter += 1
-            evaluation = minimax(move, depth-1, True, game)[0]
-            minEval = min(minEval, evaluation)
-            if minEval == evaluation:
+            eval = minimax(move, depth-1, True, game)[0]
+            minEval = min(minEval, eval)
+            if minEval == eval:
                 bestMove = move
 
         end = time.time()
@@ -51,8 +52,10 @@ def minimax(position, depth, is_max, game):
 def minimax_alpha_beta(position, depth, is_max, game, alpha, beta):
     start = time.time()
     global counter
+    global leaf
 
     if depth == 0 or position.winner() is not None:
+        leaf += 1
         return position.evaluate(), position
 
     if is_max:
@@ -73,6 +76,7 @@ def minimax_alpha_beta(position, depth, is_max, game, alpha, beta):
         end = time.time()
         print('Evaluation time: {}s'.format(round(end - start, 7)))
         print(counter)
+        print(f"Number of leaves: {leaf}")
         return maxEval, bestMove
 
     else:
@@ -93,14 +97,18 @@ def minimax_alpha_beta(position, depth, is_max, game, alpha, beta):
         end = time.time()
         print('Evaluation time: {}s'.format(round(end - start, 7)))
         print(counter)
+        print(f"Number of leaves: {leaf}")
         return minEval, bestMove
 
 
 def get_moves(position, color, game):
     global counter
+    global leaf
     counter = 0
+    leaf = 0
     for move in get_all_moves(position, color, game):
         counter += 1
+        leaf += 1
 
     return counter
 
