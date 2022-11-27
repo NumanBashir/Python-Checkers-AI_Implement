@@ -10,13 +10,14 @@ WHITE = (255, 255, 255)
 
 counter = 0
 
+
 def minimax(position, depth, is_max, game):
     start = time.time()
     global counter
 
-    if depth == 0 or position.winner() != None:
+    if depth == 0 or position.winner() is not None:
         return position.evaluate(), position
-    
+
     if is_max:
         maxEval = -math.inf
         bestMove = None
@@ -47,27 +48,27 @@ def minimax(position, depth, is_max, game):
         return minEval, bestMove
 
 
-
 def minimax_alpha_beta(position, depth, is_max, game, alpha, beta):
     start = time.time()
     global counter
 
-    if depth == 0 or position.winner() != None:
+    if depth == 0 or position.winner() is not None:
         return position.evaluate(), position
-    
+
     if is_max:
-        maxEval = float('-inf')
+        maxEval = -math.inf
         bestMove = None
         for move in get_all_moves(position, WHITE, game):
             counter += 1
             evaluation = minimax_alpha_beta(move, depth-1, False, game, alpha, beta)[0]
-            maxEval = max(maxEval, evaluation)
-            if maxEval == evaluation:
+            if evaluation > maxEval:
                 bestMove = move
-            alpha = max(alpha, evaluation)
-            if beta <= alpha:
+                maxEval = evaluation
+            alpha = max(alpha, maxEval)
+            if (beta <= alpha):
                 counter -= 1
                 break
+
 
         end = time.time()
         print('Evaluation time: {}s'.format(round(end - start, 7)))
@@ -75,23 +76,25 @@ def minimax_alpha_beta(position, depth, is_max, game, alpha, beta):
         return maxEval, bestMove
 
     else:
-        minEval = float('inf')
+        minEval = math.inf
         bestMove = None
         for move in get_all_moves(position, RED, game):
             counter += 1
             evaluation = minimax_alpha_beta(move, depth-1, True, game, alpha, beta)[0]
-            minEval = min(minEval, evaluation)
-            if minEval == evaluation:
+            if evaluation < minEval:
                 bestMove = move
-            beta = min(beta, evaluation)
-            if beta <= alpha:
+                minEval = evaluation
+            beta = min(beta, minEval)
+            if (beta <= alpha):
                 counter -= 1
                 break
+
 
         end = time.time()
         print('Evaluation time: {}s'.format(round(end - start, 7)))
         print(counter)
         return minEval, bestMove
+
 
 def get_moves(position, color, game):
     global counter
@@ -102,35 +105,24 @@ def get_moves(position, color, game):
     return counter
 
 
-def simulate_move(piece, move, board, game, skip):
+def simulation_of_move(piece, move, board, skip):
     board.move(piece, move[0], move[1])
     if skip:
         board.remove(skip)
 
     return board
 
+
 def get_all_moves(board, color, game):
     moves = []
     leaves = []
 
     for piece in board.get_all_pieces(color):
-        valid_moves = board.get_valid_moves(piece) #Get all the valid moves for the given piece
-        for move, skip in valid_moves.items():
-            #draw_moves(game, board, piece)
-            temp_board = deepcopy(board)
-            temp_piece = temp_board.get_piece(piece.row, piece.col)
-            new_board = simulate_move(temp_piece, move, temp_board, game, skip)
+        applicable_move = board.get_valid_moves(piece)  # Get all the valid moves for the given piece
+        for move, skip in applicable_move.items():
+            temporary_board = deepcopy(board)
+            temporary_piece = temporary_board.get_piece(piece.row, piece.col)
+            new_board = simulation_of_move(temporary_piece, move, temporary_board, skip)
             moves.append(new_board)
 
     return moves
-
-
-def draw_moves(game, board, piece):
-    valid_moves = board.get_valid_moves(piece)
-    board.draw(game.win)
-    pygame.draw.circle(game.win, (0,255,0), (piece.x, piece.y), 50, 5)
-    game.draw_valid_moves(valid_moves.keys())
-    pygame.display.update()
-    pygame.time.delay(250)
-
-
