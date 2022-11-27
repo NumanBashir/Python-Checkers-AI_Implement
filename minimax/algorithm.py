@@ -15,8 +15,10 @@ leaf = 0
 def minimax(position, depth, is_max, game):
     start = time.time()
     global counter
+    global leaf
 
     if depth == 0 or position.winner() is not None:
+        leaf += 1
         return position.evaluate(), position
 
     if is_max:
@@ -31,7 +33,8 @@ def minimax(position, depth, is_max, game):
 
         end = time.time()
         print('Evaluation time: {}s'.format(round(end - start, 7)))
-        print(counter)
+        print(f"Number of moves: {counter}")
+        print(f"Number of leaves: {leaf}")
         return maxEval, bestMove
     else:
         minEval = math.inf
@@ -45,7 +48,8 @@ def minimax(position, depth, is_max, game):
 
         end = time.time()
         print('Evaluation time: {}s'.format(round(end - start, 7)))
-        print(counter)
+        print(f"Number of moves: {counter}")
+        print(f"Number of leaves: {leaf}")
         return minEval, bestMove
 
 
@@ -75,8 +79,9 @@ def minimax_alpha_beta(position, depth, is_max, game, alpha, beta):
 
         end = time.time()
         print('Evaluation time: {}s'.format(round(end - start, 7)))
-        print(counter)
+        print(f"Number of moves: {counter}")
         print(f"Number of leaves: {leaf}")
+        #print(f"max val = {maxEval}")
         return maxEval, bestMove
 
     else:
@@ -96,8 +101,9 @@ def minimax_alpha_beta(position, depth, is_max, game, alpha, beta):
 
         end = time.time()
         print('Evaluation time: {}s'.format(round(end - start, 7)))
-        print(counter)
+        print(f"Number of moves: {counter}")
         print(f"Number of leaves: {leaf}")
+        #print(f"min val = {minEval}")
         return minEval, bestMove
 
 
