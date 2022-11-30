@@ -31,6 +31,7 @@ def minimax(position, depth, is_max, game):
             if maxEval == eval:
                 bestMove = move
 
+
         end = time.time()
         print('Evaluation time: {}s'.format(round(end - start, 7)))
         print(f"Number of moves: {counter}")
