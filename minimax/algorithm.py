@@ -82,7 +82,6 @@ def minimax_alpha_beta(position, depth, is_max, game, alpha, beta):
         print('Evaluation time: {}s'.format(round(end - start, 7)))
         print(f"Number of moves: {counter}")
         print(f"Number of leaves: {leaf}")
-        #print(f"max val = {maxEval}")
         return maxEval, bestMove
 
     else:
@@ -104,7 +103,6 @@ def minimax_alpha_beta(position, depth, is_max, game, alpha, beta):
         print('Evaluation time: {}s'.format(round(end - start, 7)))
         print(f"Number of moves: {counter}")
         print(f"Number of leaves: {leaf}")
-        #print(f"min val = {minEval}")
         return minEval, bestMove
 
 

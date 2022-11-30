@@ -15,7 +15,7 @@ class Board:
             for col in range(row % 2, COLS, 2):
                 pygame.draw.rect(win, RED, (row*SQUARE_SIZE, col *SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
 
-    def evaluate(self): #The better this function is the better the AI will become
+    def evaluate(self):
         return self.white_left - self.red_left + (self.white_kings * 1.5 - self.red_kings * 1.5)
 
     def get_all_pieces(self, color):
