@@ -2,7 +2,7 @@
 import pygame
 from checkers.constants import WIDTH, HEIGHT, SQUARE_SIZE, RED, WHITE
 from checkers.game import Game
-from minimax.algorithm import minimax, minimax_alpha_beta, get_moves
+from minimax.AI import minimax, minimax_alpha_beta, get_moves
 import math
 
 FPS = 60

@@ -1,6 +1,5 @@
 from copy import deepcopy
 import time
-from logging import root
 
 import pygame
 import math
