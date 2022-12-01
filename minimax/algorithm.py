@@ -27,9 +27,13 @@ def minimax(position, depth, is_max, game):
         for move in get_all_moves(position, WHITE, game):
             counter += 1
             eval = minimax(move, depth-1, False, game)[0]
-            maxEval = max(maxEval, eval)
-            if maxEval == eval:
+            if eval > maxEval:
                 bestMove = move
+                maxEval = eval
+            #maxEval = max(maxEval, eval)
+           # if maxEval == eval:
+                #bestMove = move
+
 
         end = time.time()
         print('Evaluation time: {}s'.format(round(end - start, 7)))
@@ -42,9 +46,12 @@ def minimax(position, depth, is_max, game):
         for move in get_all_moves(position, RED, game):
             counter += 1
             eval = minimax(move, depth-1, True, game)[0]
-            minEval = min(minEval, eval)
-            if minEval == eval:
+            if eval < minEval:
                 bestMove = move
+                minEval = eval
+            #minEval = min(minEval, eval)
+            #if minEval == eval:
+                #bestMove = move
 
         end = time.time()
         print('Evaluation time: {}s'.format(round(end - start, 7)))
