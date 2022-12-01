@@ -68,10 +68,10 @@ def minimax_alpha_beta(position, depth, is_max, game, alpha, beta):
         bestMove = None
         for move in get_all_moves(position, WHITE, game):
             counter += 1
-            evaluation = minimax_alpha_beta(move, depth-1, False, game, alpha, beta)[0]
-            if evaluation > maxEval:
+            eval = minimax_alpha_beta(move, depth-1, False, game, alpha, beta)[0]
+            if eval > maxEval:
                 bestMove = move
-                maxEval = evaluation
+                maxEval = eval
             alpha = max(alpha, maxEval)
             if (beta <= alpha):
                 counter -= 1
@@ -89,10 +89,10 @@ def minimax_alpha_beta(position, depth, is_max, game, alpha, beta):
         bestMove = None
         for move in get_all_moves(position, RED, game):
             counter += 1
-            evaluation = minimax_alpha_beta(move, depth-1, True, game, alpha, beta)[0]
-            if evaluation < minEval:
+            eval = minimax_alpha_beta(move, depth-1, True, game, alpha, beta)[0]
+            if eval < minEval:
                 bestMove = move
-                minEval = evaluation
+                minEval = eval
             beta = min(beta, minEval)
             if (beta <= alpha):
                 counter -= 1
