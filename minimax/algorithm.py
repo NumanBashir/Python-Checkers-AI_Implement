@@ -30,9 +30,6 @@ def minimax(position, depth, is_max, game):
             if eval > maxEval:
                 bestMove = move
                 maxEval = eval
-            #maxEval = max(maxEval, eval)
-           # if maxEval == eval:
-                #bestMove = move
 
 
         end = time.time()
@@ -49,9 +46,6 @@ def minimax(position, depth, is_max, game):
             if eval < minEval:
                 bestMove = move
                 minEval = eval
-            #minEval = min(minEval, eval)
-            #if minEval == eval:
-                #bestMove = move
 
         end = time.time()
         print('Evaluation time: {}s'.format(round(end - start, 7)))
